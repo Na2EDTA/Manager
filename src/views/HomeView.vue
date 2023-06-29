@@ -28,7 +28,7 @@
 			text-color="rgb(249, 249, 249)"
 			active-text-color="#00aaff"
 			style="height: 91.2vh;min-height: 100%;"
-			unique-opened="true">
+			unique-opened = "true">
 				<el-submenu index="1" >
 					<template slot="title">
 						<i class="el-icon-setting" style="color: #eee;"></i>
@@ -39,7 +39,9 @@
 						  <span style="color: #777777; font-size: 10px;">调试</span>
 						  </template>
 					  <el-menu-item index="1-1">灯光调试</el-menu-item>
-					  <el-menu-item index="1-2">温湿度信息</el-menu-item>
+					  <el-menu-item index="1-2" @click="requestSensorData">
+						  温湿度信息
+					  </el-menu-item>
 					</el-menu-item-group>
 					<el-menu-item-group title="分组2">
 					  <el-menu-item index="1-3">选项3</el-menu-item>
@@ -89,14 +91,8 @@
 		</el-aside>
 		
 		<el-main>
-		  <el-table :data="tableData">
-			<el-table-column prop="date" label="日期" width="140">
-			</el-table-column>
-			<el-table-column prop="operation" label="操作" width="120">
-			</el-table-column>
-			<el-table-column prop="tips" label="操作备注">
-			</el-table-column>
-		  </el-table>
+		  <canvas ref="myChart" id="myChart"></canvas>
+		  
 		</el-main>
 		
 	
@@ -122,6 +118,7 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import axios from 'axios'
+import chartjs from 'chart.js'
 
 export default {
   data() {
@@ -143,10 +140,19 @@ export default {
 	  return{
 		  settingEnabled: false
 	  }
+	  const test = {
+		  temperatures:40,
+		  humidities:10,
+		  labels:'114514'
+	  };return{
+		  testdata:Array(10).fill(test)
+	  }
+	  
+	  
     },
 	methods:{
 		requestSensorData(){
-			const url = '192.168.31.104/sensor/data';
+			const url = 'http://192.168.31.104/sensor/data';
 			this.sendToServer(url);
 			
 		},
@@ -160,12 +166,42 @@ export default {
 			  axios.get(url)
 				.then(response => {
 					const data = response.data;
+					const labels = data.timestamp; // 时间作为X轴的标签
+					const temperatures = data.temperature; // 温度数据
+					const humidities = data.humidity; // 湿度数据
+					// 绘制折线图
+					console.log(temperatures);
+					console.log(humidities);
+						/* new Chart(ctx, {
+					    type: 'line',
+					    data: {
+					        labels: labels,
+					        datasets: [
+								{
+					                label: '温度',
+					                data: temperatures,
+					                borderColor: 'red',
+					                backgroundColor: 'transparent',
+					            },
+					            {
+					                label: '湿度',
+					                data: humidities,
+					                borderColor: 'blue',
+					                backgroundColor: 'transparent',
+					            }
+					        ]
+					    },
+					    options: {
+					              // 可以设置一些图表的选项，如标题、尺寸等
+					    }
+					}) */;
 					
 					console.log('ready');
 					// 处理响应
 				})
 				.catch(error => {
-					console.log('error');
+					console.log(error);
+					
 					// 处理错误
 				});
 		}
