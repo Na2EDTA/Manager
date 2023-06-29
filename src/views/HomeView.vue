@@ -148,6 +148,7 @@ export default {
 		requestSensorData(){
 			const url = '192.168.31.104/sensor/data';
 			this.sendToServer(url);
+			
 		},
 		toggleSetting() {
 		  this.settingEnabled = !this.settingEnabled;
@@ -158,12 +159,14 @@ export default {
 		sendToServer(url) {
 			  axios.get(url)
 				.then(response => {
-				  console.log('ready');
-				 // 处理响应
+					const data = response.data;
+					
+					console.log('ready');
+					// 处理响应
 				})
 				.catch(error => {
-				  console.log('error');
-				  // 处理错误
+					console.log('error');
+					// 处理错误
 				});
 		}
 	}
