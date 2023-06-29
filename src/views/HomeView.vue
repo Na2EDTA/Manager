@@ -5,7 +5,7 @@
 		<b style="color: #eee; font-size:30px;font-weight:300; text-align: center; position: relative;right: 49vw; bottom: 0.15vh;">KEEP SECURITY & SPORT</b>
 	  </span>
 	  <span style="position: relative; right: 83.6vw; top: 1.15vh;">
-	  		  <img src="../../logo.png" style="height: 6.5vh;width: 6vw;"></img>
+	  		  <img src="../../logo.png" style="height: 6.5vh;width: 6vw;"> </img>
 	  </span>
 	  
 	  <el-dropdown>
@@ -39,7 +39,7 @@
 						  <span style="color: #777777; font-size: 10px;">调试</span>
 						  </template>
 					  <el-menu-item index="1-1">灯光调试</el-menu-item>
-					  <el-menu-item index="1-2" @click="requestSensorData">
+					  <el-menu-item index="1-2" @click="GetServer">
 						  温湿度信息
 					  </el-menu-item>
 					</el-menu-item-group>
@@ -91,8 +91,10 @@
 		</el-aside>
 		
 		<el-main>
-		  <canvas ref="myChart" id="myChart"></canvas>
-		  
+			<template>
+  				<div ref="chartContainer" style="width: 100%; height: 800px;"></div>
+			</template>
+			
 		</el-main>
 		
 	
@@ -119,6 +121,7 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 import axios from 'axios'
 import chartjs from 'chart.js'
+import * as echarts from 'echarts';
 
 export default {
   data() {
@@ -131,7 +134,13 @@ export default {
         tips: '由亮转灭'
       };
       return {
-        tableData: Array(10).fill(item)
+		chart: null,
+		dataObject: {
+      		temperature: 0,
+      		humidity: 0,
+      		timestamp: null
+    	},
+		temperatures:[0, 0, 0, 0, 0, 0, 0]
       }
 	  
 	  const light = {
@@ -150,6 +159,35 @@ export default {
 	  
 	  
     },
+	mounted() {
+  		this.chart = echarts.init(this.$refs.chartContainer);
+	},
+	computed: {
+    	async chartData() {
+    		const response = await fetch('http://192.168.31.104/sensor/data');
+    		const data = await response.json();
+    		this.dataObject = data;
+    		const { data1, data2, data3, data4, data5, data6, data7 } = this.temperatures;
+   			 return {
+      			xAxis: {
+        		data: ['data1', 'data2', 'data3', 'data4', 'data5', 'data6', 'data7']
+      			},
+      		series: [{
+        		name: '数据',
+        		type: 'line',
+        		data: [data1, data2, data3, data4, data5, data6, data7]
+      		}]
+    };
+  }
+  	},
+	watch: {
+    	dataObject: {
+      	handler() {
+        	this.chart.setOption(this.chartData);
+      	},
+      	deep: true
+    }
+  },
 	methods:{
 		requestSensorData(){
 			const url = 'http://192.168.31.104/sensor/data';
@@ -162,16 +200,19 @@ export default {
 		  const url = this.settingEnabled ? 'http://192.168.31.104/led/on' : 'http://192.168.31.104/led/off';
 		  this.sendToServer(url);
 		},
+		GetServer() {
+			this.timer = setInterval(this.requestSensorData, 1000);
+		},
 		sendToServer(url) {
-			  axios.get(url)
-				.then(response => {
-					const data = response.data;
-					const labels = data.timestamp; // 时间作为X轴的标签
-					const temperatures = data.temperature; // 温度数据
-					const humidities = data.humidity; // 湿度数据
+			  fetch(url)
+				.then(response => response.json())
+				.then(data => {
+					this.dataObject.temperature = data.temperature;
+					this.dataObject.humidity = data.humidity;
+					this.dataObject.timestamp = data.timestamp;
+					this.chart.setOption(this.chartData);
+					console.log(this.chart);
 					// 绘制折线图
-					console.log(temperatures);
-					console.log(humidities);
 						/* new Chart(ctx, {
 					    type: 'line',
 					    data: {
@@ -196,7 +237,6 @@ export default {
 					    }
 					}) */;
 					
-					console.log('ready');
 					// 处理响应
 				})
 				.catch(error => {
