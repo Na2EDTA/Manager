@@ -92,12 +92,12 @@
 		
 		<el-main>
 			<template>
-				<el-progress type="circle" :percentage="0"></el-progress>
-				<el-progress type="circle" :percentage="25"></el-progress>
-				<el-progress type="circle" :percentage="100" status="success"></el-progress>
-				<el-progress type="circle" :percentage="70" status="warning"></el-progress>
-				<el-progress type="circle" :percentage="50" status="exception"></el-progress>
-  <div>
+				<el-progress type="circle" :percentage="0" style="top: 7.5vh;right:12.5%; position: relative;"></el-progress>
+				<el-progress type="circle" :percentage="25" style="top: 7.5vh;right:6.25%; position: relative;"></el-progress>
+				<el-progress type="circle" :percentage="100" status="success" style="top: 7.5vh; position: relative;"></el-progress>
+				<el-progress type="circle" :percentage="70" status="warning" style="top: 7.5vh;left:6.25%; position: relative;"></el-progress>
+				<el-progress type="circle" :percentage="50" status="exception" style="top: 7.5vh;left:12.5%; position: relative;"></el-progress>
+  <div style="top: 15vh; position: relative;">
     <el-row :gutter="20">
       <el-col :span="6">
         <div>
