@@ -92,8 +92,48 @@
 		
 		<el-main>
 			<template>
-  				<div ref="chartContainer" style="width: 100%; height: 800px;"></div>
-			</template>
+				<el-progress type="circle" :percentage="0"></el-progress>
+				<el-progress type="circle" :percentage="25"></el-progress>
+				<el-progress type="circle" :percentage="100" status="success"></el-progress>
+				<el-progress type="circle" :percentage="70" status="warning"></el-progress>
+				<el-progress type="circle" :percentage="50" status="exception"></el-progress>
+  <div>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <div>
+          <el-statistic :value = "temperature" title="室内温度">
+
+		  </el-statistic>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div>
+          <el-statistic title="今日入馆人数">
+            <template slot="formatter"> 13 </template>
+          </el-statistic>
+        </div>
+      </el-col>
+      <el-col :span="6">
+        <div>
+          <el-statistic :value = "humidity" title="当前湿度">
+
+		  </el-statistic>
+        </div>
+      </el-col>
+      <el-col :span="6">
+		<div>
+			<el-statistic
+            ref="statistic"
+            format="YYYY-MM-DD HH:mm:ss"
+            :value="timestamps"
+            title="当前时间"
+          >
+		</el-statistic>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
+</template>
 			
 		</el-main>
 		
@@ -125,68 +165,25 @@ import * as echarts from 'echarts';
 
 export default {
   data() {
-	  var d = new Date();
-	  var m = d.getMonth()+1
-	  
-      const item = {
-        date: d.getFullYear() + "-" + m + "-" + d.getDate(),
-        operation: '灯光闪烁',
-        tips: '由亮转灭'
-      };
+
       return {
-		chart: null,
-		dataObject: {
+
       		temperature: 0,
       		humidity: 0,
-      		timestamp: null
-    	},
-		temperatures:[0, 0, 0, 0, 0, 0, 0]
+      		timestamps: 0
+
       }
-	  
-	  const light = {
-		  settingEnabled: false
-	  };
-	  return{
-		  settingEnabled: false
-	  }
-	  const test = {
-		  temperatures:40,
-		  humidities:10,
-		  labels:'114514'
-	  };return{
-		  testdata:Array(10).fill(test)
-	  }
-	  
-	  
+
     },
 	mounted() {
-  		this.chart = echarts.init(this.$refs.chartContainer);
+		
 	},
 	computed: {
-    	async chartData() {
-    		const response = await fetch('http://192.168.31.104/sensor/data');
-    		const data = await response.json();
-    		this.dataObject = data;
-    		const { data1, data2, data3, data4, data5, data6, data7 } = this.temperatures;
-   			 return {
-      			xAxis: {
-        		data: ['data1', 'data2', 'data3', 'data4', 'data5', 'data6', 'data7']
-      			},
-      		series: [{
-        		name: '数据',
-        		type: 'line',
-        		data: [data1, data2, data3, data4, data5, data6, data7]
-      		}]
-    };
-  }
+    	
   	},
 	watch: {
-    	dataObject: {
-      	handler() {
-        	this.chart.setOption(this.chartData);
-      	},
-      	deep: true
-    }
+    	
+    
   },
 	methods:{
 		requestSensorData(){
@@ -207,11 +204,13 @@ export default {
 			  fetch(url)
 				.then(response => response.json())
 				.then(data => {
-					this.dataObject.temperature = data.temperature;
-					this.dataObject.humidity = data.humidity;
-					this.dataObject.timestamp = data.timestamp;
-					this.chart.setOption(this.chartData);
-					console.log(this.chart);
+					this.temperature = data.temperature;
+					this.humidity = data.humidity;
+					const numbers = data.timestamp.match(/\d+/g);
+					const value = numbers ? Number(numbers.join("")) : 0;
+					 // 输出：123456
+					this.timestamps = value;
+					console.log(this.timestamps);
 					// 绘制折线图
 						/* new Chart(ctx, {
 					    type: 'line',
