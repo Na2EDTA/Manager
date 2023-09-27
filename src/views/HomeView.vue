@@ -5,18 +5,17 @@
 		<b style="color: #eee; font-size:30px;font-weight:300; text-align: center; position: relative;right: 49vw; bottom: 0.15vh;">KEEP SECURITY & SPORT</b>
 	  </span>
 	  <span style="position: relative; right: 83.6vw; top: 1.15vh;">
-	  		  <img src="../../logo.png" style="height: 6.5vh;width: 6vw;"> </img>
+	  		  <img src="../../logo.png" style="height: 6.5vh;width: 6vw;"> 
 	  </span>
 	  
-	  <el-dropdown>
-		<i class="el-icon-setting" style="margin-right: 15px;color: #eee;font-size: 25px;position: relative; bottom: 5px;"></i>
-		<el-dropdown-menu slot="dropdown">
+	  <el-dropdown style="width: 70px; cursor: pointer;">
+		<span style="font-size: 15px; color: #eee; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;">管理员</span><i class="el-icon-arrow-down" style="margin-right: 10px"></i>
+		<el-dropdown-menu slot="dropdown" style="margin-left: 5px;">
 		  <el-dropdown-item>账号信息</el-dropdown-item>
 		  <el-dropdown-item>新增操作</el-dropdown-item >
-		  <el-dropdown-item>删除操作</el-dropdown-item>
+		  <el-dropdown-item>退出登录</el-dropdown-item>
 		</el-dropdown-menu>
 	  </el-dropdown>
-	  <span style="color: #eee; height: 0%;position: relative; bottom: 8px;">未登录</span>
 	</el-header>  
 	  
     <el-container style="height: 100%; border-top: 1.5px solid rgb(237, 249, 248)">
@@ -72,18 +71,18 @@
 			  <el-submenu index="3">
 				<template slot="title">
 					<i class="el-icon-message" style="color: #eee;"></i>
-					<span slot="title">导航三</span>
+					<span slot="title">监控</span>
 				</template>
 				<el-menu-item-group>
-				  <template slot="title">分组一</template>
-				  <el-menu-item index="3-1">选项1</el-menu-item>
-				  <el-menu-item index="3-2">选项2</el-menu-item>
+				  <template slot="title">媒体</template>
+				  <el-menu-item index="3-1">视频监控1</el-menu-item>
+				  <el-menu-item index="3-2">视频监控2</el-menu-item>
 				</el-menu-item-group>
 				<el-menu-item-group title="分组2">
-				  <el-menu-item index="3-3">选项3</el-menu-item>
+				  <el-menu-item index="3-3">数据</el-menu-item>
 				</el-menu-item-group>
 				<el-submenu index="3-4">
-				  <template slot="title">选项4</template>
+				  <template slot="title">可视化图表</template>
 				  <el-menu-item index="3-4-1">选项4-1</el-menu-item>
 				</el-submenu>
 			  </el-submenu>
