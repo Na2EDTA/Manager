@@ -54,12 +54,12 @@
 			  <el-submenu index="2">
 				<template slot="title">
 					<i class="el-icon-menu" style="color: #eee;"></i>
-					<span slot="title">导航二</span>
+					<span slot="title">查询</span>
 				</template>
 				<el-menu-item-group>
-				  <template slot="title">分组一</template>
-				  <el-menu-item index="2-1">选项1</el-menu-item>
-				  <el-menu-item index="2-2">选项2</el-menu-item>
+				  <template slot="title">用户相关</template>
+				  <el-menu-item index="2-1">查询用户</el-menu-item>
+				  <el-menu-item index="2-2">查询准入记录</el-menu-item>
 				</el-menu-item-group>
 				<el-menu-item-group title="分组2">
 				  <el-menu-item index="2-3">选项3</el-menu-item>
