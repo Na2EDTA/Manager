@@ -27,7 +27,8 @@ const routes = [
       { path: 'user', name: "User", component: () => import("../views/SearchView.vue")},
       { path: 'home', name: "Home", component: () => import("../views/HomeView.vue")},
       { path: 'watch', name: "Watch", component: () => import("../views/WatchView.vue")},
-      { path: 'media1', name: "Media1", component: () => import("../views/Media1View.vue")}
+      { path: 'media1', name: "Media1", component: () => import("../views/Media1View.vue")},
+      { path: 'charts', name: "Charts", component: () => import("../views/ChartsView.vue")}
     ]
   }
 ]

@@ -70,7 +70,7 @@
                   </el-menu-item-group>
                   <el-submenu index="3-4">
                     <template slot="title">可视化图表</template>
-                    <el-menu-item index="3-4-1">选项4-1</el-menu-item>
+                    <el-menu-item index="/charts">选项4-1</el-menu-item>
                   </el-submenu>
                 </el-submenu>
               </el-menu>
