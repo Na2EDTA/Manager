@@ -28,7 +28,13 @@ const routes = [
       { path: 'home', name: "Home", component: () => import("../views/HomeView.vue")},
       { path: 'watch', name: "Watch", component: () => import("../views/WatchView.vue")},
       { path: 'media1', name: "Media1", component: () => import("../views/Media1View.vue")},
-      { path: 'charts', name: "Charts", component: () => import("../views/ChartsView.vue")}
+      { path: 'charts', name: "Charts", component: () => import("../views/ChartsView.vue")},
+      { path: 'terminal', name: "Terminal", component: () => import("../views/TerminalView.vue")},
+      { path: 'enter', name: "Enter", component: () => import("../views/EnterSerView.vue")},
+      { path: 'gym', name: "Gym", component: () => import("../views/GymView.vue")},
+      { path: 'record', name: "Record", component: () => import("../views/RecordView.vue")},
+      { path: 'light', name: "Light", component: () => import("../views/LightView.vue")}
+
     ]
   }
 ]

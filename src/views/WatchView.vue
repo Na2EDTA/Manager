@@ -47,10 +47,7 @@ title="当前时间"
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import axios from 'axios'
-import chartjs from 'chart.js'
-import * as echarts from 'echarts';
+
 
 export default {
   data() {
